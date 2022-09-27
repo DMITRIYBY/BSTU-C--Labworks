@@ -6,24 +6,26 @@ using System.Linq;
 
 namespace Lab_Work_2
 {
-    partial class Program
+    abstract class Program
     {
         static void Main()
         {
             int[] time1 = new int[2] {21,50};
-            int[] time2 = new int[2] {19,30};
-            int[] time3 = new int[2] {13,00};
-            Airline sqt1 = new Airline("Singapoore", 1931378, time1);
-            Airline sqt2 = new Airline("Moscow", 145768, time2);
-            Airline sqt3 = new Airline("New-York", 2445768, time3);
-            sqt1 = new Airline("Bankok", 1935378, time1);
+            int[] time2 = new int[2] {19,25};
+            int[] time3 = new int[2] {13,45};
+            int[] time4 = new int[2] {18,55};
+            Airline sqt1 = new Airline("Miami", 1931378, time1, "Britten-Norman", "Monday");
+            Airline sqt2 = new Airline("Moscow", 145768, time2, "Boeing", "Saturday");
+            Airline sqt3 = new Airline("New-York", 2445768, time3, "Boeing","Tuesday");
+            sqt1 = new Airline("Bankok", 1935378, time1, "Aerospace");
            
             Airline[] Info = new Airline[] {sqt1, sqt2, sqt3};
-            
-            int count = Info.Length;
 
+            //int count = Info.Length;
 
-            Console.WriteLine("\nВыберите способ вывода: \n 1. Вывод всех рейсов.\n 2. Вывод по точке прибытия.\n 3. Вывод по номеру рейса.\n 4. Exit\n");
+            var charter = new { gap = "Paris", air_number = 387653, plane_type = "Agusta", days = "Mon, Tue, Fri", id = 387653 * 3, start_time = time4 };
+ 
+            Console.WriteLine("\nВыберите способ вывода: \n 1. Вывод всех рейсов.\n 2. Вывод по точке прибытия.\n 3. Вывод по номеру рейса.\n 4.Вывод анонимного типа.\n 5. Exit\n");
             int choose = 0;
             try
             {
@@ -39,7 +41,7 @@ namespace Lab_Work_2
                 case 1:
                     foreach (Airline inf in Info)
                     {
-                        inf.Output_All();
+                        inf.ToString();
                     };
                     Main();
                     break;
@@ -48,7 +50,7 @@ namespace Lab_Work_2
                     string CURRENT_GAP = Console.ReadLine();
                     foreach (Airline inf in Info)
                     {
-                        inf.Output_by_Gap(CURRENT_GAP);
+                        inf.Output_by_Gap(ref CURRENT_GAP);
                     };
                     Main();
                     break;
@@ -57,19 +59,20 @@ namespace Lab_Work_2
                     double CURRENT_NUMB = Convert.ToDouble(Console.ReadLine());
                     foreach (Airline inf in Info)
                     {
-                        inf.Output_by_ID(CURRENT_NUMB);
+                        inf.Output_by_ID(ref CURRENT_NUMB);
                     };
                     Main();
                     break;
                 case 4:
+                    Console.WriteLine($"Анонимный тип: \nПункт назначения: {charter.gap} \nНомер рейса: {charter.air_number}\nВремя вылета: {charter.start_time[0]}:{charter.start_time[1]}\nТип самолета: {charter.plane_type}\nДни: {charter.days}");
+                    break;
+                case 5:
                     Environment.Exit(0);
                     break;
                 default:
                     Main();
                     break;
             }
-
-            
         }
     }
 }
